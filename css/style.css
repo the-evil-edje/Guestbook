@@ -1,0 +1,28 @@
+body {
+  background-image: url("../img/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#captchaImg {
+  width: 100px;
+}
+
+footer {
+	position:fixed;
+	left: 0px;
+	bottom: 0px;
+	height:40px;
+	width:100%;
+
+	color: white;
+	text-align: center;
+}
+
+#footer-text {
+	margin: 0 auto;
+	color: #800000;
+	font-size: 13px;
+	font-weight: bold;
+	text-decoration: none;
+}
