@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <?php
 		require 'inc/database-connection.php';
 
@@ -44,6 +43,8 @@ if (isset($_GET['captcha'])) {
 	<head>
 		<meta charset="UTF-8">
 		<meta name="description" content="Guestbook">
+		<meta name="keywords" content="HTML,CSS,php">
+		<meta name="author" content="Eddie Beelen">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<title>Guestbook</title>
 	</head>
@@ -53,73 +54,91 @@ if (isset($_GET['captcha'])) {
 			<p>Here u can sign in into the guestbook</p>
 		</head>
 		<form method="GET">
-  	First name: <input type="text" name="firstName"><br>
-		Insertion: <input type="text" name="insertion"><br>
-  	Last name: <input type="text" name="lastName"><br>
-		Email adress: <input type="text" name="emailAdress"><br>
-		Website adress: <input type="text" name="websiteAdress"><br>
-		Message: <input type="text" name="message"><br>
-		captcha: <input type="text" name="captcha"><br>
-		<img id="captchaImg" src="img/captcha.gif" ><br>
+
+			<table>
+				<tr>
+					<td>First name:</td>
+					<td><input type="text" name="firstName" required></td>
+				</tr>
+				<tr>
+					<td>Insertion:</td>
+					<td><input type="text" name="insertion"></td>
+				</tr>
+				<tr>
+					<td>Last name:</td>
+					<td><input type="text" name="lastName" required></td>
+				</tr>
+				<tr>
+					<td>Email adress:</td>
+					<td><input type="email" name="emailAdress" required></td>
+				</tr>
+				<tr>
+					<td>Website adress:</td>
+					<td><input type="text" name="websiteAdress"></td>
+				</tr>
+				<tr>
+					<td>Message:</td>
+					<td><input type="text" name="message" required></td>
+				</tr>
+				<tr>
+					<td>captcha:</td>
+					<td><input type="text" name="captcha" required></td>
+				</tr>
+			</table>
+
+    <img id="captchaImg" src="img/captcha.gif" ><br>
   	<input type="submit" name="Submit" value="Submit">
 		<input type="reset" name="Reset" value="Reset">
 		<?php
 
-		if ($firstName !== "") {
-			echo "get first name";
-			if ($lastName !== "") {
-				echo "get lastName";
-				if ($emailAdress !== "") {
-					echo "get email";
-					if ($message !== "") {
-						echo "get message";
-						if ($captcha == "W68HP") {
-							echo "get captcha";
-							$captcha = "";
-						}
-						else {
-							echo "need captcha";
-						}
-						$message = "";
-					}
-					else {
-						echo "need a message";
-					}
-					$emailAdress = "";
-				}
-				else {
-					echo "need a email";
-				}
+
+		if (isset($_GET['Submit'])) {
+			if ($captcha == "W68HP") {
+				$sql = "INSERT INTO guestbook (FirstName, Insertion, LastName, EmailAdress, WebsiteAdress, Message)
+				VALUES ('$firstName', '$insertion', '$lastName', '$emailAdress', '$websiteAdress', '$message')";
+				$firstName = "";
+				$insertion = "";
 				$lastName = "";
+				$emailAdress = "";
+				$websiteAdress = "";
+				$message = "";
+				$captcha = "";
+				 if (mysqli_query($conn, $sql)) {
+						echo "Thank you for posting";
+						header("location: index.php");
+				} else {
+						echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+				};
 			}
-			else {
-				echo "need last name";
-			}
-			$firstName = "";
-		}
-		else {
-			echo "need first name";
 		}
 
-		if (isset($_GET['reset'])) {
-			$firstName = "";
-			$insertion = "";
-			$lastName = "";
-			$emailAdress = "";
-			$websiteAdress = "";
-			$message = "";
-			$captcha = "";
-		}
+
 
 		?>
-<!-- $sql = "INSERT INTO guestbook (FirstName, Insertion, LastName, EmailAdress, WebsiteAdress, Message)
-VALUES ($firstName, $insertion, $lastName, $emailAdress, $websiteAdress, $message)
- if (mysqli_query($conn, $sql)) {
-		echo "New record created successfully";
-} else {
-		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}-->
+
 		</form>
+		<div class="review">
+
+    <?php
+    $sql5 = "select * from guestbook";
+    $reviewRatings = mysqli_query($conn, $sql5);
+
+ $reviews = array();
+ while($row5 = mysqli_fetch_assoc($reviewRatings))
+ {
+   $reviews[] = $row5;
+ }
+
+ foreach($reviews as $review)
+ {
+   echo "<div class='reviewDiv'>";
+   echo $review['Message'];
+   echo "</div>";
+ }
+ $review = "";
+  ?>
+
+  </div>
 		<?php
 			require 'inc/footer.php'
 		?>
