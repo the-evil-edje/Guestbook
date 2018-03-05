@@ -8,6 +8,11 @@ body {
   width: 100px;
 }
 
+.reviewDiv{
+  border-radius: 2px;
+  border-color: red;
+}
+
 footer {
 	position:fixed;
 	left: 0px;

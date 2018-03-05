@@ -131,8 +131,13 @@ if (isset($_GET['captcha'])) {
 
  foreach($reviews as $review)
  {
-   echo "<div class='reviewDiv'>";
-   echo $review['Message'];
+   echo "<div class='reviewDiv'>"; echo "<br>";
+	 echo "Message: ";
+   echo $review['Message']; echo "<br>";
+	 echo "Email adress: ";
+	 echo $review['EmailAdress']; echo "<br>";
+	 echo "Website adress: ";
+	 echo $review['WebsiteAdress']; echo "<br>";
    echo "</div>";
  }
  $review = "";
